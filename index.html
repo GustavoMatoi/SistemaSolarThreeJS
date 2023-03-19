@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sistema Solar Three.js</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="three.js-master/build/three.js"></script>
+    <script>
+      // Criando a cena
+      const scene = new THREE.Scene();
+
+      // Criando a camera
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+      camera.position.z = 5;
+
+      // Criando o renderizador
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+    // Criando o sol
+    const geometry = new THREE.SphereGeometry(8.8, 15, 15);
+    //Criando a terra
+    const geometryTerra = new THREE.SphereGeometry(1, 15, 15);
+    //criando a lua 
+    const geometryLua = new THREE.SphereGeometry(0.3,15,15)    
+    //criando Jupter
+    const geometryJupter = new THREE.SphereGeometry(3, 15,15)
+    //criando Marte
+    const geometryMarte = new THREE.SphereGeometry(0.8,15,15)
+    //criando Venus
+    const geometryVenus = new THREE.SphereGeometry(1,15,15)
+    //criando Saturno
+    const geometrySaturno = new THREE.SphereGeometry(2.5,15,15)
+    const geometryAneisSaturno = new THREE.CircleGeometry(3,30,30)
+    //criando mercúrio
+    const geometryMerucrio = new THREE.SphereGeometry(0.6,15,15)
+
+    //criando Urano
+    const geometryUrano = new THREE.SphereGeometry(2.5,15,15)
+    //criando Netuno
+    const geometryNetuno = new THREE.SphereGeometry(2.5,15,15)
+    //criando o planeta X
+    const geometryPlanetaX = new THREE.SphereGeometry(1.3, 15, 15);
+
+
+    // Carregando a textura do sol
+    const carregadorDaTexturaSol = new THREE.TextureLoader();
+    const texturaSol = carregadorDaTexturaSol.load('https://i.imgur.com/xhXzWKW.jpg');
+    texturaSol? console.log("Existe") : console.log("Não existe")
+
+    //Carregando a textura da terra
+    const carregadorDaTexturaTerra = new THREE.TextureLoader()
+    const texturaTerra = carregadorDaTexturaTerra.load('https://i.imgur.com/ScsMBPJ.png')
+    
+    //Carregando a textura da lua
+    const carregadorDaTexturaLua = new THREE.TextureLoader()
+    const texturaLua = carregadorDaTexturaTerra.load('https://i.imgur.com/pRybefE.jpg')
+
+    //Carregando a textura de Jupter
+    const carregadorDaTexturaJupter = new THREE.TextureLoader()
+    const texturaJupter = carregadorDaTexturaJupter.load('https://i.imgur.com/vipcXQ8.jpg')
+    
+    //Carregando a textura de Marte
+    const carregadorDaTexturaMarte = new THREE.TextureLoader()
+    const texturaMarte = carregadorDaTexturaJupter.load('https://i.imgur.com/XW6A0hB.jpg')
+
+    //Carregando as texturas de Saturno
+    const carregadorDaTexturaSaturno = new THREE.TextureLoader()
+    const texturaSaturno = carregadorDaTexturaSaturno.load('https://i.imgur.com/a58ZxoC.jpg')
+    const carregadorDaTexturaAneisSaturno = new THREE.TextureLoader()
+    const texturaAneisSaturno = carregadorDaTexturaAneisSaturno.load('https://i.imgur.com/21cXmnp.png')
+
+    //Carregando a textura de Venus
+    const carregadorDaTexturaVenus = new THREE.TextureLoader()
+    const texturaVenus = carregadorDaTexturaVenus.load('https://i.imgur.com/yHmBTOu.jpg')
+
+    //Carregando a textura de Mercúrio
+    const carregadorDaTexturaMercurio = new THREE.TextureLoader()
+    const texturaMercuirio = carregadorDaTexturaMercurio.load('https://i.imgur.com/oPZFyDT.jpg')
+
+    //Carregando a textura de Mercúrio
+    const carregadorDaTexturaUrano = new THREE.TextureLoader()
+    const texturaUrano = carregadorDaTexturaUrano.load('https://i.imgur.com/jBVfi7h.jpg')
+
+    //Carregando a textura de Mercúrio
+    const carregadorDaTexturaNetuno = new THREE.TextureLoader()
+    const texturaNetuno = carregadorDaTexturaNetuno.load('https://i.imgur.com/PejlU23.jpg')
+
+    //Carregando a textura de Mercúrio
+    const carregadorDaTexturaPlanetaX = new THREE.TextureLoader()
+    const texturaPlanetaX = carregadorDaTexturaPlanetaX.load('https://i.imgur.com/F10yODY.jpg')
+
+
+
+    // Criando o material com a textura
+    const material = new THREE.MeshBasicMaterial({ map: texturaSol });
+    const materialTerra = new THREE.MeshBasicMaterial({map: texturaTerra})
+    const materialLua = new THREE.MeshBasicMaterial({map: texturaLua})
+    const materialJupter = new THREE.MeshBasicMaterial({map: texturaJupter})
+    const materialMarte = new THREE.MeshBasicMaterial({map: texturaMarte})
+    const materialSaturno = new THREE.MeshBasicMaterial({map: texturaSaturno})
+    const materialAneisSaturno = new THREE.MeshBasicMaterial({map:texturaAneisSaturno})
+    const materialVenus = new THREE.MeshBasicMaterial({map: texturaVenus})
+    const materialMercurio = new THREE.MeshBasicMaterial({map: texturaMercuirio})
+    const materialUrano = new THREE.MeshBasicMaterial({map: texturaUrano})
+    const materialNetuno = new THREE.MeshBasicMaterial({map: texturaNetuno})
+    const materialPlanetaX = new THREE.MeshBasicMaterial({map: texturaPlanetaX})
+
+
+    //criando as variaveis dos planetas
+    const sol = new THREE.Mesh(geometry, material);
+    const terra = new THREE.Mesh(geometryTerra, materialTerra)
+    const lua = new THREE.Mesh(geometryLua, materialLua)
+    const jupter = new THREE.Mesh(geometryJupter, materialJupter)
+    const marte = new THREE.Mesh(geometryMarte, materialMarte)
+    const saturno = new THREE.Mesh(geometrySaturno, materialSaturno)
+    const aneisSaturno = new THREE.Mesh(geometryAneisSaturno, materialAneisSaturno)
+    const venus = new THREE.Mesh(geometryVenus, materialVenus)
+    const mercurio = new THREE.Mesh(geometryMerucrio, materialMercurio)
+    const urano = new THREE.Mesh(geometryUrano, materialUrano)
+    const netuno = new THREE.Mesh(geometryNetuno, materialNetuno)
+    const planetaX = new THREE.Mesh(geometryPlanetaX, materialPlanetaX)
+
+    //adicionando as cenas
+    
+    scene.add(sol);
+    sol.add(terra)
+    sol.add(jupter)
+    sol.add(marte)
+    sol.add(saturno)
+    sol.add(venus)
+    saturno.add(aneisSaturno)
+    terra.add(lua)
+    sol.add(mercurio)
+    sol.add(urano)
+    sol.add(netuno)
+    sol.add(planetaX)
+
+    terra.position.set(15, 0, 0);
+    marte.position.set(18,0,0)
+    jupter.position.set(30,0,0)
+    saturno.position.set(23,0,0)
+    lua.position.set(1.5,0,0)
+    venus.position.set(11,0,0)
+    mercurio.position.set(9,0,0)
+    urano.position.set(38, 0,0)
+    netuno.position.set(44,0,0)
+    planetaX.position.set(49,0,0)
+      camera.position.z = 60
+      // Animação
+      function animate() {
+        requestAnimationFrame(animate);
+
+        sol.rotation.y += 0.02;
+        terra.rotation.y += 0.03
+        lua.rotation.z += 0.04
+        jupter.rotation.y += 0.02
+        marte.rotation.y += 0.03
+        aneisSaturno.rotation.y += 0.01
+        venus.rotation.y +=0.03
+        mercurio.rotation.y +=0.05
+        urano.rotation.y +=0.01
+        netuno.rotation.y +=0.01
+        planetaX.rotation.y += 0.01
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
